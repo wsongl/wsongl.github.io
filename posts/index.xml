@@ -1,0 +1,64 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>All Posts - wsongl 技术录</title>
+        <link>https://wsongl.github.io/posts/</link>
+        <description>All Posts | wsongl 技术录</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wsonglcn@foxmail.com (wsongl)</managingEditor>
+            <webMaster>wsonglcn@foxmail.com (wsongl)</webMaster><lastBuildDate>Thu, 09 Nov 2023 15:37:57 &#43;0800</lastBuildDate><atom:link href="https://wsongl.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Containerd部署及配置</title>
+    <link>https://wsongl.github.io/posts/docker/containerd%E9%83%A8%E7%BD%B2%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+    <pubDate>Thu, 09 Nov 2023 15:37:57 &#43;0800</pubDate>
+    <author>wsongl</author>
+    <guid>https://wsongl.github.io/posts/docker/containerd%E9%83%A8%E7%BD%B2%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>K8s基础系列001 Pod详解</title>
+    <link>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97001-pod%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Wed, 01 Nov 2023 21:39:21 &#43;0800</pubDate>
+    <author>wsongl</author>
+    <guid>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97001-pod%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[[toc] 一、pod基础内容 二、volume for pod 三、pod生命周期 四、pod重启策略 五、pod健康检查 六、pod控制器 七、pod调度策略 八、初始化容]]></description>
+</item>
+<item>
+    <title>[k8s基础] Kubectl</title>
+    <link>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80-kubectl/</link>
+    <pubDate>Wed, 27 Sep 2023 21:06:59 &#43;0800</pubDate>
+    <author>wsongl</author>
+    <guid>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80-kubectl/</guid>
+    <description><![CDATA[[toc] 一、kubectl常用命令 1.1、概览 1.2、排序（按字段排序） # 将输出结果按某个字段排序。可以通过 --sort-by 参数以 jsonpath 表达式进行指定 $ kubectl [command] [TYPE] [NAME] --sort- by=&lt;jsonpath_exp&gt;]]></description>
+</item>
+<item>
+    <title>k8s事件监控</title>
+    <link>https://wsongl.github.io/posts/kubernetes/k8s%E4%BA%8B%E4%BB%B6%E7%9B%91%E6%8E%A7/</link>
+    <pubDate>Tue, 19 Sep 2023 13:54:39 &#43;0800</pubDate>
+    <author>wsongl</author>
+    <guid>https://wsongl.github.io/posts/kubernetes/k8s%E4%BA%8B%E4%BB%B6%E7%9B%91%E6%8E%A7/</guid>
+    <description><![CDATA[参考： 阿里云事件监控：https://help.aliyun.com/zh/ack/ack-managed-and-ack-dedicate]]></description>
+</item>
+<item>
+    <title>[K8s基础] - SecurityContext</title>
+    <link>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80-securitycontext/</link>
+    <pubDate>Mon, 18 Sep 2023 13:55:02 &#43;0800</pubDate>
+    <author>wsongl</author>
+    <guid>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80-securitycontext/</guid>
+    <description><![CDATA[securityContext]]></description>
+</item>
+<item>
+    <title>[K8s基础] - 扩缩容</title>
+    <link>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80-%E6%89%A9%E7%BC%A9%E5%AE%B9/</link>
+    <pubDate>Mon, 18 Sep 2023 13:55:02 &#43;0800</pubDate>
+    <author>wsongl</author>
+    <guid>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80-%E6%89%A9%E7%BC%A9%E5%AE%B9/</guid>
+    <description><![CDATA[[toc] 一、监控指标 一、Horizontal Pod Autoscaler 1.1、原理 1.2、落地配置 二、VerticalPodAutoscaler 2.1、原理 2.2、落地]]></description>
+</item>
+<item>
+    <title>[K8s基础] - Service</title>
+    <link>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80-service/</link>
+    <pubDate>Mon, 18 Sep 2023 13:54:39 &#43;0800</pubDate>
+    <author>wsongl</author>
+    <guid>https://wsongl.github.io/posts/kubernetes/k8s%E5%9F%BA%E7%A1%80-service/</guid>
+    <description><![CDATA[service]]></description>
+</item>
+</channel>
+</rss>
