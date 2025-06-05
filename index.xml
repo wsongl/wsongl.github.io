@@ -1,0 +1,221 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>wsongl 技术录</title>
+        <link>https://wsongl.github.io/</link>
+        <description>Hugo theme - LoveIt</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 04 Jun 2025 17:04:48 &#43;0800</lastBuildDate>
+            <atom:link href="https://wsongl.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>UV基础详解</title>
+    <link>https://wsongl.github.io/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/</link>
+    <pubDate>Wed, 04 Jun 2025 17:04:48 &#43;0800</pubDate>
+    <author>wsongl</author>
+    <guid>https://wsongl.github.io/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/</guid>
+    <description><![CDATA[<p>[toc]</p>
+<h2 id="一介绍">一、介绍</h2>
+<p>python环境管理工具</p>
+<p>官网：https://docs.astral.sh/uv/</p>
+<p><strong>官方文档，值得一读。</strong></p>
+<p>【翻译版】：https://hellowac.github.io/uv-zh-cn/</p>]]></description>
+</item>
+<item>
+    <title>Hugo入门</title>
+    <link>https://wsongl.github.io/hugo%E5%85%A5%E9%97%A8/</link>
+    <pubDate>Sun, 25 May 2025 22:22:35 &#43;0800</pubDate>
+    <author>wsongl</author>
+    <guid>https://wsongl.github.io/hugo%E5%85%A5%E9%97%A8/</guid>
+    <description><![CDATA[<p>hugo入门</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># github hugo</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gohugoio</span><span class="o">/</span><span class="n">hugo</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># https://github.com/gohugoio/hugo/releases/download/v0.147.3/hugo_extended_0.147.3_darwin-universal.tar.gz文件放到bin下面就行</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 标准版和扩展版，推荐使用扩展版</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 官方文档</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gohugo</span><span class="o">.</span><span class="n">io</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 主题</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">themes</span><span class="o">.</span><span class="n">gohugo</span><span class="o">.</span><span class="n">io</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 中文文档</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">hugo</span><span class="o">.</span><span class="n">opendocs</span><span class="o">.</span><span class="n">io</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># hugo介绍、按照</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">blog</span><span class="o">.</span><span class="n">csdn</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">sinat_41672927</span><span class="o">/</span><span class="n">article</span><span class="o">/</span><span class="n">details</span><span class="o">/</span><span class="mi">146426733</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 常用命令</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 新建站点</span>
+</span></span><span class="line"><span class="cl"><span class="n">hugo</span> <span class="n">new</span> <span class="n">site</span> <span class="o">&lt;</span><span class="n">site</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动本地服务</span>
+</span></span><span class="line"><span class="cl"><span class="n">hugo</span> <span class="n">server</span>
+</span></span><span class="line"><span class="cl"><span class="n">hugo</span> <span class="n">server</span> <span class="o">-</span><span class="n">D</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 本地构建</span>
+</span></span><span class="line"><span class="cl"><span class="n">hugo</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 新文章</span>
+</span></span><span class="line"><span class="cl"><span class="n">hugo</span> <span class="n">new</span> <span class="n">posts</span><span class="o">/</span><span class="n">first</span><span class="o">-</span><span class="n">post</span><span class="o">.</span><span class="n">md</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># GitHubPages托管，github.io设置</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span><span class="err">、</span><span class="n">github</span> <span class="err">创建仓库，名称：</span> <span class="o">&lt;</span><span class="n">yourname</span><span class="o">&gt;.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span><span class="err">、</span><span class="n">hugo</span><span class="o">.</span><span class="n">toml</span> <span class="err">设置</span> <span class="n">baseURL</span> <span class="err">为</span> <span class="n">https</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">yourname</span><span class="o">&gt;.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span><span class="err">、</span><span class="n">hugo命令构建静态资源</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span><span class="err">、上传构建成果到仓库中</span>
+</span></span><span class="line"><span class="cl"><span class="mi">5</span><span class="err">、浏览器打开</span> <span class="n">https</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">yourname</span><span class="o">&gt;.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 主题 LoveIt</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">dillonzq</span><span class="o">/</span><span class="n">LoveIt</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">README</span><span class="o">.</span><span class="n">zh</span><span class="o">-</span><span class="n">cn</span><span class="o">.</span><span class="n">md</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 官方说明</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">hugoloveit</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">categories</span><span class="o">/</span><span class="n">documentation</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">init</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">submodule</span> <span class="n">add</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">dillonzq</span><span class="o">/</span><span class="n">LoveIt</span><span class="o">.</span><span class="n">git</span> <span class="n">themes</span><span class="o">/</span><span class="n">LoveIt</span>
+</span></span><span class="line"><span class="cl"><span class="err">或者</span>
+</span></span><span class="line"><span class="cl"><span class="err">下载</span><span class="n">release包</span><span class="err">，放到</span><span class="n">themes目录下</span><span class="err">，文件夹名称为</span><span class="n">LoveIt</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 新建站点</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># hugo new site demo-1                      </span>
+</span></span><span class="line"><span class="cl"><span class="n">Congratulations</span><span class="o">!</span> <span class="n">Your</span> <span class="n">new</span> <span class="n">Hugo</span> <span class="n">site</span> <span class="n">was</span> <span class="n">created</span> <span class="ow">in</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">wsongl</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">wsongl</span><span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">demo</span><span class="o">-</span><span class="mf">1.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Just</span> <span class="n">a</span> <span class="n">few</span> <span class="n">more</span> <span class="n">steps</span><span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mf">1.</span> <span class="n">Change</span> <span class="n">the</span> <span class="n">current</span> <span class="n">directory</span> <span class="n">to</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">wsongl</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">wsongl</span><span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">demo</span><span class="o">-</span><span class="mf">1.</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span> <span class="n">Create</span> <span class="ow">or</span> <span class="n">install</span> <span class="n">a</span> <span class="n">theme</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">   <span class="o">-</span> <span class="n">Create</span> <span class="n">a</span> <span class="n">new</span> <span class="n">theme</span> <span class="n">with</span> <span class="n">the</span> <span class="n">command</span> <span class="s2">&#34;hugo new theme &lt;THEMENAME&gt;&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">-</span> <span class="n">Install</span> <span class="n">a</span> <span class="n">theme</span> <span class="n">from</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">themes</span><span class="o">.</span><span class="n">gohugo</span><span class="o">.</span><span class="n">io</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span> <span class="n">Edit</span> <span class="n">hugo</span><span class="o">.</span><span class="n">toml</span><span class="p">,</span> <span class="n">setting</span> <span class="n">the</span> <span class="s2">&#34;theme&#34;</span> <span class="n">property</span> <span class="n">to</span> <span class="n">the</span> <span class="n">theme</span> <span class="n">name</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="mf">4.</span> <span class="n">Create</span> <span class="n">new</span> <span class="n">content</span> <span class="n">with</span> <span class="n">the</span> <span class="n">command</span> <span class="s2">&#34;hugo new content &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&#34;</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="mf">5.</span> <span class="n">Start</span> <span class="n">the</span> <span class="n">embedded</span> <span class="n">web</span> <span class="n">server</span> <span class="n">with</span> <span class="n">the</span> <span class="n">command</span> <span class="s2">&#34;hugo server --buildDrafts&#34;</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">See</span> <span class="n">documentation</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gohugo</span><span class="o">.</span><span class="n">io</span><span class="o">/.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">echo</span> <span class="s2">&#34;# wsongl.github.io&#34;</span> <span class="o">&gt;&gt;</span> <span class="n">README</span><span class="o">.</span><span class="n">md</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">init</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">add</span> <span class="n">README</span><span class="o">.</span><span class="n">md</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&#34;first commit&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">M</span> <span class="n">master</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">wsongl</span><span class="o">/</span><span class="n">wsongl</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">git</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">master</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">wsongl</span><span class="o">/</span><span class="n">wsongl</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">git</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">M</span> <span class="n">master</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">master</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># loveit设置</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## 头像设置</span>
+</span></span><span class="line"><span class="cl"><span class="k">static</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">avatar</span><span class="o">.</span><span class="n">png</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## 默认md文件内容</span>
+</span></span><span class="line"><span class="cl"><span class="n">archetypes</span><span class="o">/</span><span class="n">default</span><span class="o">.</span><span class="n">md</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## posts.md字段设置</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">fatesinger</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="mi">103481</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item>
+</channel>
+</rss>

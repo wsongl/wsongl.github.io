@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>UV基础详解 - wsongl 技术录</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:url" content="https://wsongl.github.io/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/">
+  <meta property="og:site_name" content="wsongl 技术录">
+  <meta property="og:title" content="UV基础详解">
+  <meta property="og:description" content="[toc]
+一、介绍 python环境管理工具
+官网：https://docs.astral.sh/uv/
+官方文档，值得一读。
+【翻译版】：https://hellowac.github.io/uv-zh-cn/">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-04T17:04:48+08:00">
+    <meta property="article:modified_time" content="2025-06-04T17:04:48+08:00">
+    <meta property="og:image" content="https://wsongl.github.io/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://wsongl.github.io/logo.png">
+  <meta name="twitter:title" content="UV基础详解">
+  <meta name="twitter:description" content="[toc]
+一、介绍 python环境管理工具
+官网：https://docs.astral.sh/uv/
+官方文档，值得一读。
+【翻译版】：https://hellowac.github.io/uv-zh-cn/">
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://wsongl.github.io/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/" /><link rel="prev" href="https://wsongl.github.io/hugo%E5%85%A5%E9%97%A8/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "UV基础详解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/wsongl.github.io\/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3\/"
+        },"image": ["https:\/\/wsongl.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  3604 ,
+        "url": "https:\/\/wsongl.github.io\/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3\/","datePublished": "2025-06-04T17:04:48+08:00","dateModified": "2025-06-04T17:04:48+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/wsongl.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "wsongl"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="wsongl 技术录"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>LoveIt</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="https://github.com/dillonzq/LoveIt" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="wsongl 技术录"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i></span>LoveIt</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="https://github.com/dillonzq/LoveIt" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">UV基础详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>wsongl</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-06-04">2025-06-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3604 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/" class="leancloud_visitors" data-flag-title="UV基础详解">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一介绍">一、介绍</a></li>
+    <li><a href="#二安装">二、安装</a>
+      <ul>
+        <li><a href="#21shell方式安装推荐">2.1、shell方式安装（推荐）</a></li>
+        <li><a href="#22pip方式安装">2.2、pip方式安装</a></li>
+        <li><a href="#23brew方式安装">2.3、brew方式安装</a></li>
+        <li><a href="#24离线安装">2.4、离线安装</a></li>
+        <li><a href="#25版本验证">2.5、版本验证</a></li>
+        <li><a href="#26uv升级">2.6、uv升级</a></li>
+      </ul>
+    </li>
+    <li><a href="#三常用命令">三、常用命令</a>
+      <ul>
+        <li><a href="#31python版本管理">3.1、python版本管理</a></li>
+        <li><a href="#32虚拟venv环境管理">3.2、虚拟(venv)环境管理</a></li>
+        <li><a href="#33依赖包管理">3.3、依赖包管理</a>
+          <ul>
+            <li><a href="#331uv-pip方式管理依赖">3.3.1、uv pip方式管理依赖</a></li>
+            <li><a href="#332uv-add方式安装依赖推荐">3.3.2、uv add方式安装依赖（推荐）</a>
+              <ul>
+                <li><a href="#dev参数">&ndash;dev参数</a></li>
+                <li><a href="#group参数">&ndash;group参数</a></li>
+                <li><a href="#dev-group关联关系和区别">&ndash;dev &ndash;group关联关系和区别</a></li>
+                <li><a href="#分组总结">分组总结</a></li>
+              </ul>
+            </li>
+            <li><a href="#333卸载依赖包">3.3.3、卸载依赖包</a></li>
+          </ul>
+        </li>
+        <li><a href="#34创建项目">3.4、创建项目</a></li>
+        <li><a href="#35uv-cache">3.5、uv cache</a></li>
+        <li><a href="#36uv-lock">3.6、uv lock</a></li>
+        <li><a href="#37uv-export">3.7、uv export</a></li>
+      </ul>
+    </li>
+    <li><a href="#四使用优化">四、使用优化</a>
+      <ul>
+        <li><a href="#41uv安装python网络加速">4.1、uv安装python，网络加速</a></li>
+        <li><a href="#42docker中使用uv">4.2、docker中使用uv</a></li>
+        <li><a href="#43迁移现有requirementstxt">4.3、迁移现有requirements.txt</a></li>
+      </ul>
+    </li>
+    <li><a href="#五pip依赖包源">五、pip依赖包源</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>[toc]</p>
+<h2 id="一介绍">一、介绍</h2>
+<p>python环境管理工具</p>
+<p>官网：https://docs.astral.sh/uv/</p>
+<p><strong>官方文档，值得一读。</strong></p>
+<p>【翻译版】：https://hellowac.github.io/uv-zh-cn/</p>
+<h2 id="二安装">二、安装</h2>
+<p>参考：https://docs.astral.sh/uv/getting-started/installation/</p>
+<h3 id="21shell方式安装推荐">2.1、shell方式安装（推荐）</h3>
+<p>Linux or Mac：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># curl方式安装</span>
+</span></span><span class="line"><span class="cl">curl -LsSf https://astral.sh/uv/install.sh <span class="p">|</span> sh
+</span></span><span class="line"><span class="cl"><span class="c1"># wget方式安装</span>
+</span></span><span class="line"><span class="cl">wget -qO- https://astral.sh/uv/install.sh <span class="p">|</span> sh
+</span></span><span class="line"><span class="cl"><span class="c1"># 指定版本安装</span>
+</span></span><span class="line"><span class="cl">curl -LsSf https://astral.sh/uv/0.7.10/install.sh <span class="p">|</span> sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Windows：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">powershell -ExecutionPolicy ByPass -c <span class="s2">&#34;irm https://astral.sh/uv/install.ps1 | iex&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 指定版本安装</span>
+</span></span><span class="line"><span class="cl">powershell -ExecutionPolicy ByPass -c <span class="s2">&#34;irm https://astral.sh/uv/0.7.10/install.ps1 | iex&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="22pip方式安装">2.2、pip方式安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">pip install uv
+</span></span><span class="line"><span class="cl">pipx install uv
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="23brew方式安装">2.3、brew方式安装</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">brew install uv
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="24离线安装">2.4、离线安装</h3>
+<p><a href="https://github.com/astral-sh/uv/tags" target="_blank" rel="noopener noreffer ">https://github.com/astral-sh/uv/tags</a></p>
+<p>github上下载对应的包，放入path中即可。</p>
+<h3 id="25版本验证">2.5、版本验证</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv --version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="26uv升级">2.6、uv升级</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv self update
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="三常用命令">三、常用命令</h2>
+<h3 id="31python版本管理">3.1、python版本管理</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 安装具体版本（推荐）</span>
+</span></span><span class="line"><span class="cl">uv python install 3.11.12
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 指定小版本，则会安装最新的版本，如下：则会安装3.11的最新版本</span>
+</span></span><span class="line"><span class="cl">uv python install 3.11
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pin the current project to use a specific Python version.</span>
+</span></span><span class="line"><span class="cl">uv python pin 3.11.12
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>[!NOTE]</p>
+<p>如果出现安装超时，参考4.1小节 网络加速方法。</p></blockquote>
+<h3 id="32虚拟venv环境管理">3.2、虚拟(venv)环境管理</h3>
+<p><strong>创建虚拟环境：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 在当前目录下创建一个名为 .venv 的虚拟环境，使用系统默认的 Python 版本</span>
+</span></span><span class="line"><span class="cl">uv venv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 在当前目录下创建一个名为 my-project-env 的虚拟环境，使用指定的 Python 3.11 版本</span>
+</span></span><span class="line"><span class="cl">uv venv -p python3.11 my-project-env
+</span></span><span class="line"><span class="cl">uv venv -p 3.11 my-project-env
+</span></span><span class="line"><span class="cl">uv venv --python 3.11 my-project-env
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 在指定路径创建一个名为 custom-env 的虚拟环境，使用 Python 3.10</span>
+</span></span><span class="line"><span class="cl">uv venv -p python3.10 /path/to/my/project/custom-env
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>删除虚拟环境：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 删除当前目录下的名为 .venv 的虚拟环境</span>
+</span></span><span class="line"><span class="cl">uv venv --remove .venv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除指定路径的虚拟环境</span>
+</span></span><span class="line"><span class="cl">uv venv --remove /path/to/my/project/my-project-env
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="33依赖包管理">3.3、依赖包管理</h3>
+<p>确保你已经激活了虚拟环境</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Windows (CMD): .\venv\Scripts\activate
+</span></span><span class="line"><span class="cl">macOS/Linux (Bash/Zsh): source venv/bin/activate
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>[!IMPORTANT]</p>
+<p><strong>推荐使用<code>uv add</code> 方式安装，这样会自动更新 <code>pyproject.toml</code> <code>uv.lock</code>文件。</strong></p></blockquote>
+<h4 id="331uv-pip方式管理依赖">3.3.1、uv pip方式管理依赖</h4>
+<p><strong>安装依赖包：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 确保你已经激活了虚拟环境</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装 requests 包</span>
+</span></span><span class="line"><span class="cl">uv pip install requests
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装指定版本的 Flask 包</span>
+</span></span><span class="line"><span class="cl">uv pip install <span class="nv">Flask</span><span class="o">==</span>2.2.2
+</span></span><span class="line"><span class="cl">uv pip install <span class="s2">&#34;django&gt;=4.0,&lt;5.0&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从 requirements.txt 文件安装所有依赖</span>
+</span></span><span class="line"><span class="cl">uv pip install -r requirements.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装开发依赖 (通常在 requirements-dev.txt 中)</span>
+</span></span><span class="line"><span class="cl">uv pip install -r requirements-dev.txt -d dev
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># uv pip安装依赖包</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 确保你已经激活了虚拟环境</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装项目依赖（从 pyproject.toml）</span>
+</span></span><span class="line"><span class="cl">uv pip install -e .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装开发依赖</span>
+</span></span><span class="line"><span class="cl">uv pip install -e <span class="s2">&#34;.[dev]&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装所有可选依赖</span>
+</span></span><span class="line"><span class="cl">uv pip install -e <span class="s2">&#34;.[dev,docs,web]&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 生成锁定文件</span>
+</span></span><span class="line"><span class="cl">uv pip freeze &gt; requirements.lock
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 同步依赖（确保环境与 requirements.txt 完全一致）</span>
+</span></span><span class="line"><span class="cl">uv pip sync requirements.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>卸载依赖包：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 确保你已经激活了虚拟环境</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 卸载 requests 包</span>
+</span></span><span class="line"><span class="cl">uv pip uninstall requests
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 卸载多个包</span>
+</span></span><span class="line"><span class="cl">uv pip uninstall Flask Werkzeug
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>列出已安装的包：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 确保你已经激活了虚拟环境</span>
+</span></span><span class="line"><span class="cl">uv pip list
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>导出requirements文件：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 确保你已经激活了虚拟环境</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 导出到默认的 requirements.txt 文件</span>
+</span></span><span class="line"><span class="cl">uv pip freeze &gt; requirements.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 导出到指定的文件</span>
+</span></span><span class="line"><span class="cl">uv pip freeze &gt; my_dependencies.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>同步依赖：</strong></p>
+<p><strong>功能:</strong> 根据锁定的 requirements.txt 文件同步当前虚拟环境中的依赖。如果虚拟环境中的包与锁定文件不一致，uv 会安装、升级或卸载包以使其与锁定文件匹配。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 确保你已经激活了虚拟环境，并且有一个 requirements.txt 文件</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 根据 requirements.txt 同步虚拟环境</span>
+</span></span><span class="line"><span class="cl">uv pip sync requirements.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 根据 pylock.toml 同步虚拟环境</span>
+</span></span><span class="line"><span class="cl">uv pip sync pylock.toml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 同步指定的锁定文件</span>
+</span></span><span class="line"><span class="cl">uv pip sync locked_dependencies.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="332uv-add方式安装依赖推荐">3.3.2、uv add方式安装依赖（推荐）</h4>
+<p><strong>添加依赖包：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 确保你已经激活了虚拟环境</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装 requests 包，默认生产依赖</span>
+</span></span><span class="line"><span class="cl">uv add requests
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装指定版本的 Flask 包</span>
+</span></span><span class="line"><span class="cl">uv add <span class="nv">Flask</span><span class="o">==</span>2.2.2
+</span></span><span class="line"><span class="cl">uv add <span class="s2">&#34;django&gt;=4.0,&lt;5.0&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加开发依赖</span>
+</span></span><span class="line"><span class="cl">uv add --dev pytest black flake8
+</span></span><span class="line"><span class="cl">uv add --dev <span class="s2">&#34;pytest&gt;=7.0&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 添加可选依赖组</span>
+</span></span><span class="line"><span class="cl">uv add --group docs sphinx sphinx-rtd-theme
+</span></span><span class="line"><span class="cl">uv add --group web fastapi uvicorn
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>添加依赖包（依赖包分组）：</strong></p>
+<p>在<code> uv</code> 包管理工具中，<code>--dev</code> 和 <code>--group</code> 是用于将依赖项分类到不同组别的参数，类似于其他包管理器（如 pip 或 poetry）中的开发依赖和可选依赖。</p>
+<h5 id="dev参数">&ndash;dev参数</h5>
+<ul>
+<li><code>--dev</code> 表示将包标记为<strong>开发依赖</strong>（Development Dependency），这类依赖通常仅在开发环境中需要（如测试框架、代码格式化工具等），而不会出现在生产环境中。</li>
+<li>这些依赖会被记录在 <code>pyproject.toml</code> 或类似配置文件的 <code>dev-dependencies</code> 部分（取决于工具的具体实现）。</li>
+</ul>
+<p><strong>使用示例：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 安装 pytest、black 和 mypy，并将它们标记为开发依赖
+</span></span><span class="line"><span class="cl">uv add --dev pytest black mypy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="group参数">&ndash;group参数</h5>
+<ul>
+<li><code>--group</code> 允许将依赖项划分到<strong>自定义的依赖组</strong>中，用于更灵活地管理不同环境的依赖（如测试、文档、可选功能等）。</li>
+<li>类似于 <code>poetry</code> 的 <code>extras</code> 或 <code>pip</code> 的可选依赖组。</li>
+</ul>
+<p><strong>使用示例：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 安装 mkdocs 和 mkdocstrings 并将其分配到 docs 组，安装 pytest 和 coverage 并分配到 tests 组
+</span></span><span class="line"><span class="cl">uv add --group docs mkdocs mkdocstrings
+</span></span><span class="line"><span class="cl">uv add --group tests pytest coverage
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>在 <code>pyproject.toml</code> 中，依赖组可能会显示为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">[</span><span class="k">tool</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 主依赖</span>
+</span></span><span class="line"><span class="cl"><span class="n">requests</span> <span class="o">=</span> <span class="s2">&#34;^2.31.0&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="k">tool</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">mkdocs</span> <span class="o">=</span> <span class="s2">&#34;^1.5.0&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">mkdocstrings</span> <span class="o">=</span> <span class="s2">&#34;^0.24.0&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="k">tool</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">tests</span><span class="o">.</span><span class="n">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">pytest</span> <span class="o">=</span> <span class="s2">&#34;^8.0.0&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">coverage</span> <span class="o">=</span> <span class="s2">&#34;^7.0.0&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<p>安装特定组（group）的依赖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv install --group docs  # 仅安装 docs 组的依赖
+</span></span><span class="line"><span class="cl">uv install --all-groups  # 安装所有组的依赖
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">适用场景：
+</span></span><span class="line"><span class="cl">- 文档生成（如 sphinx、mkdocs）。
+</span></span><span class="line"><span class="cl">- 测试环境（如 pytest、coverage）。
+</span></span><span class="line"><span class="cl">- 可选功能（如 GPU 加速包 torch 的特定版本）。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="dev-group关联关系和区别">&ndash;dev &ndash;group关联关系和区别</h5>
+<p>在 <code>uv</code> 包管理工具中，依赖分组（dependency groups）的默认配置目前主要围绕 <strong>开发依赖（dev）</strong> 和 <strong>主依赖（默认分组）</strong>，但具体支持的默认分组可能因工具版本或设计有所不同。以下是已知的常见默认分组及其用途：</p>
+<ul>
+<li>默认分组（Main/Default）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv add requests  # 添加到主依赖
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>配置文件 (<code>pyproject.toml</code>)：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">[</span><span class="k">tool</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">requests</span> <span class="o">=</span> <span class="s2">&#34;^2.31.0&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<ul>
+<li>开发分组（Development）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv add --dev pytest
+</span></span><span class="line"><span class="cl"># 或
+</span></span><span class="line"><span class="cl">uv add --group dev pytest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>配置文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">[</span><span class="k">tool</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">dev</span><span class="o">-</span><span class="n">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">pytest</span> <span class="o">=</span> <span class="s2">&#34;^7.0.0&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 或（取决于实现）</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="k">tool</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">pytest</span> <span class="o">=</span> <span class="s2">&#34;^7.0.0&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<ul>
+<li>其他分组（group）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv add --group tests pytest-coverage
+</span></span><span class="line"><span class="cl">uv add --group docs mkdocs
+</span></span><span class="line"><span class="cl">uv add --group optional redis
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 自定义分组
+</span></span><span class="line"><span class="cl">uv add --group benchmark pandas
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>配置文件会生成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">[</span><span class="k">tool</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">benchmark</span><span class="o">.</span><span class="n">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">pandas</span> <span class="o">=</span> <span class="s2">&#34;^2.0.0&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h5 id="分组总结">分组总结</h5>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">分组类型</th>
+          <th style="text-align: left">参数/名称</th>
+          <th style="text-align: left">用途</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>主依赖</strong></td>
+          <td style="text-align: left">无（默认）</td>
+          <td style="text-align: left">生产环境必需依赖</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>开发依赖</strong></td>
+          <td style="text-align: left"><code>--dev</code> 或 <code>--group dev</code></td>
+          <td style="text-align: left">开发工具（测试、格式化等）</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>自定义分组</strong></td>
+          <td style="text-align: left"><code>--group &lt;name&gt;</code></td>
+          <td style="text-align: left">按需划分（如 docs、tests）</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="333卸载依赖包">3.3.3、卸载依赖包</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 确保你已经激活了虚拟环境</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 卸载 requests 包</span>
+</span></span><span class="line"><span class="cl">uv remove requests
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 卸载多个包</span>
+</span></span><span class="line"><span class="cl">uv remove Flask Werkzeug
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 从 docs 组移除 mkdocs</span>
+</span></span><span class="line"><span class="cl">uv remove --group docs mkdocs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="34创建项目">3.4、创建项目</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv init my_project
+</span></span><span class="line"><span class="cl">uv init my_project -p 3.11.12
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="35uv-cache">3.5、uv cache</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 查看缓存路径</span>
+</span></span><span class="line"><span class="cl">uv cache dir
+</span></span><span class="line"><span class="cl"><span class="c1"># 从缓存目录中删除所有缓存条目，将其彻底清除。</span>
+</span></span><span class="line"><span class="cl">uv cache clean
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除所有未使用的缓存条目</span>
+</span></span><span class="line"><span class="cl">uv cache purge
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="36uv-lock">3.6、uv lock</h3>
+<p><code>uv lock</code> 用于 <strong>锁定当前项目的依赖版本</strong>，生成或更新 <code>uv.lock</code> 文件（类似于 <code>pip</code> 的 <code>requirements.txt</code> 或 <code>poetry</code> 的 <code>poetry.lock</code>）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 根据 pyproject.toml 生成 uv.lock 文件（如果不存在）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果已有 uv.lock，会更新它以匹配当前依赖声明</span>
+</span></span><span class="line"><span class="cl">uv lock
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 如果项目使用 requirements.txt 而非 pyproject.toml</span>
+</span></span><span class="line"><span class="cl">uv lock -r requirements.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 忽略现有 uv.lock，重新计算依赖关系（适用于手动修改 pyproject.toml 后）</span>
+</span></span><span class="line"><span class="cl">uv lock --update
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="37uv-export">3.7、uv export</h3>
+<p><code>uv export</code> 用于 <strong>将当前项目的依赖导出为其他格式</strong>（如 <code>requirements.txt</code>），通常用于兼容传统工具或部署场景。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">uv</span> <span class="k">export</span> <span class="o">&gt;</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 忽略哈希校验（某些旧版 pip 需要）</span>
+</span></span><span class="line"><span class="cl"><span class="n">uv</span> <span class="k">export</span> <span class="o">--</span><span class="n">without</span><span class="o">-</span><span class="n">hashes</span> <span class="o">&gt;</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 导出指定分组的依赖</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 导出 pyproject.toml 中 [tool.uv.group.dev] 下的依赖。</span>
+</span></span><span class="line"><span class="cl"><span class="n">uv</span> <span class="k">export</span> <span class="o">--</span><span class="n">group</span> <span class="n">dev</span> <span class="o">&gt;</span> <span class="n">requirements</span><span class="o">-</span><span class="n">dev</span><span class="o">.</span><span class="n">txt</span>
+</span></span><span class="line"><span class="cl"><span class="n">uv</span> <span class="k">export</span> <span class="o">--</span><span class="n">group</span> <span class="n">prod</span> <span class="o">&gt;</span> <span class="n">requirements</span><span class="o">-</span><span class="n">prod</span><span class="o">.</span><span class="n">txt</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 排除开发依赖</span>
+</span></span><span class="line"><span class="cl"><span class="n">uv</span> <span class="k">export</span> <span class="o">--</span><span class="n">without</span> <span class="n">dev</span> <span class="o">&gt;</span> <span class="n">requirements</span><span class="o">-</span><span class="n">prod</span><span class="o">.</span><span class="n">txt</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 导出json格式</span>
+</span></span><span class="line"><span class="cl"><span class="n">uv</span> <span class="k">export</span> <span class="o">--</span><span class="n">format</span> <span class="n">json</span> <span class="o">&gt;</span> <span class="n">requirements</span><span class="o">.</span><span class="n">json</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 结合 uv lock 确保一致性</span>
+</span></span><span class="line"><span class="cl"><span class="n">uv</span> <span class="n">lock</span>              <span class="c1"># 先锁定依赖版本</span>
+</span></span><span class="line"><span class="cl"><span class="n">uv</span> <span class="k">export</span> <span class="o">--</span><span class="n">locked</span>   <span class="c1"># 从锁文件导出</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="四使用优化">四、使用优化</h2>
+<h3 id="41uv安装python网络加速">4.1、uv安装python，网络加速</h3>
+<p>参考：https://developer.aliyun.com/article/1660997</p>
+<p>描述：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv安装python版本，因为网络隔离原因，不能直接下载包。需要离线安装方式。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>1、下载离线安装包</strong></p>
+<p>在执行<code>uv python install 3.11.12</code>时，uv 会去<code>https://github.com/astral-sh/python-build-standalone/releases</code>上拉取对应版本（最新日期）。</p>
+<p>如果知道你需要的版本包，可以直接从<code>github</code>地址上下载。如果不知道，先执行<code>uv python install 3.11.12</code>命令，在超时时，会显示包名，按照包名去找到对应的包，然后下载包。</p>
+<p>示例：</p>
+<p>如：</p>
+<p>包名为：</p>
+<p><strong>2、设置环境变量</strong></p>
+<p>本地建一个目录，比如<code>/mnt/workspace/uv_python_install_mirror/20250409</code>，然后将上述压缩包放入这个目录，然后将环境变量<code>UV_PYTHON_INSTALL_MIRROR</code>设置成这个目录，这样就uv就会去这个目录里面找压缩包，然后快速安装python了。比如<code>export UV_PYTHON_INSTALL_MIRROR=file:///mnt/workspace/uv_python_install_mirror/20250409</code></p>
+<blockquote>
+<p>[!IMPORTANT]</p>
+<p>目录的日期是一定要创建的，否则会找不到文件。</p></blockquote>
+<p><strong>3、安装python</strong></p>
+<p>uv python install 3.11.12</p>
+<h3 id="42docker中使用uv">4.2、docker中使用uv</h3>
+<p>参考：https://docs.astral.sh/uv/guides/integration/docker/</p>
+<h3 id="43迁移现有requirementstxt">4.3、迁移现有requirements.txt</h3>
+<p>运行 <code>uv pip compile requirements.txt -o pyproject.toml --format pyproject</code> 即可转换为 pyproject.toml 格式。</p>
+<h2 id="五pip依赖包源">五、pip依赖包源</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">阿里云： http://mirrors.aliyun.com/pypi/simple/
+</span></span><span class="line"><span class="cl">清华大学： https://pypi.tuna.tsinghua.edu.cn/simple/
+</span></span><span class="line"><span class="cl">中国科技大学： https://pypi.mirrors.ustc.edu.cn/simple/
+</span></span><span class="line"><span class="cl">中国科学技术大学： http://pypi.mirrors.ustc.edu.cn/simple/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>全局环境变量设置包源地址：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">export</span> <span class="n">UV_INDEX_URL</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pypi</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>项目设置包源地址：</strong></p>
+<p>在<code>pyproject.toml</code>中，最后添加一下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="p">[[</span><span class="k">tool</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">index</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;https://mirrors.aliyun.com/pypi/simple/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">default</span> <span class="o">=</span> <span class="bp">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>安装包时设置源：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv pip install &lt;package_name&gt; --index-url https://mirrors.aliyun.com/pypi/simple/
+</span></span><span class="line"><span class="cl">uv pip install &lt;package_name&gt; -i https://mirrors.aliyun.com/pypi/simple/
+</span></span><span class="line"><span class="cl"># ssl异常时
+</span></span><span class="line"><span class="cl">uv pip install &lt;package_name&gt; -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<p><a href="https://www.cnblogs.com/java-six/p/18872752" target="_blank" rel="noopener noreffer ">https://www.cnblogs.com/java-six/p/18872752</a></p>
+<p>uv add和uv pip区别：https://mp.weixin.qq.com/s/8tyD87RMARPRqiV8i-saOg</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2025-06-04</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://wsongl.github.io/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/" data-title="UV基础详解"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://wsongl.github.io/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://wsongl.github.io/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/" data-title="UV基础详解"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://wsongl.github.io/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/" data-title="UV基础详解"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://wsongl.github.io/uv%E5%9F%BA%E7%A1%80%E8%AF%A6%E8%A7%A3/" data-title="UV基础详解" data-ralateuid="xxxx"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/hugo%E5%85%A5%E9%97%A8/" class="prev" rel="prev" title="Hugo入门"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Hugo入门</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.147.7">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.0"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@15.1.2/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://valine.hugoloveit.com","visitor":true}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
